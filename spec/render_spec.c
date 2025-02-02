@@ -2,8 +2,6 @@
 #include "../headers/render.h"
 #include "spec_helper.h"
 
-// TODO - center rectangle
-
 module(render_spec, {
 
   describe("render", {
