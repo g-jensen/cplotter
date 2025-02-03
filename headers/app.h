@@ -5,6 +5,6 @@
 #include "window.h"
 #include "render.h"
 
-int app_run();
+int app_run(int argc, char **argv);
 
 #endif

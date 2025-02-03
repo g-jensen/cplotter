@@ -2,7 +2,7 @@
 
 // 66,144 bytes in use at exit
 
-int app_run() {
+int app_run(int argc, char **argv) {
   Window *window = window_create();
 
   Shape* shapes = (Shape*)malloc(9*sizeof(Shape));
