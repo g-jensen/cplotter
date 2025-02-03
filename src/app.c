@@ -17,10 +17,10 @@ int app_run() {
   Event* event = create_event();
   while (window_is_open(window)) {
     while (window_poll_event(window, event)) {
-      if (isClosedEvent(event)) {
+      if (is_closed_event(event)) {
         window_close(window);
       }
-      if (isMouseMovedEvent(event)) {
+      if (is_mouse_moved_event(event)) {
         shape_destroy(s);
         Vec2i v = window_mouse_pos(window);
         s = shape_rectangle(create_rectangle_between(v1,(Vec2f){v.x,v.y},2));
