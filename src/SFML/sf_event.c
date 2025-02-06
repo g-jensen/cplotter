@@ -1,3 +1,5 @@
+#ifndef SPECC
+
 #include "../../headers/event.h"
 #include "../../headers/SFML/sf_event.h"
 
@@ -22,3 +24,5 @@ int is_closed_event(Event* event) {
 int is_mouse_moved_event(Event* event) {
   return event->sf.type == sfEvtMouseMoved;
 }
+
+#endif
