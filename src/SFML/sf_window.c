@@ -1,3 +1,5 @@
+#ifndef SPECC
+
 #include "../../headers/window.h"
 #include "../../headers/SFML/sf_window.h"
 #include "../../headers/SFML/sf_rectangle.h"
@@ -35,3 +37,5 @@ Vec2i window_mouse_pos(Window* window) {return sf_to_veci(sfMouse_getPositionRen
 void window_clear(Window* window) {sfRenderWindow_clear(window->sf, sfBlack);}
 void window_display(Window* window) {sfRenderWindow_display(window->sf);}
 void window_destroy(Window* window) {sfRenderWindow_destroy(window->sf); free(window);}
+
+#endif
