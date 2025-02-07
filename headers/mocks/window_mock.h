@@ -30,7 +30,8 @@ typedef struct EventList {
 
 struct Window {
   int is_open;
-  ShapeList shapes;
+  ShapeList drawn_shapes;
+  ShapeList displayed_shapes;
   Vec2i mouse_pos;
   EventList events;
 };

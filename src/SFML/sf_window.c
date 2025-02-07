@@ -9,8 +9,8 @@
 
 #include <stdlib.h>
 
-Window* window_create() {
-  sfVideoMode mode = {800, 800, 32};
+Window* window_create(unsigned int width, unsigned int height) {
+  sfVideoMode mode = {width, height, 32};
   Window* w = (Window*)calloc(1,sizeof(Window));
   w->sf = sfRenderWindow_create(mode, "cplotter", sfResize | sfClose, NULL);
   return w;

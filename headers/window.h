@@ -7,7 +7,7 @@
 
 typedef struct Window Window;
 
-Window* window_create();
+Window* window_create(unsigned int width, unsigned int height);
 void window_draw(Window* window, Shape shape);
 int window_is_open(Window* window);
 void window_close(Window* window);

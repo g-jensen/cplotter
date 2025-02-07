@@ -5,23 +5,45 @@
 
 #include <stdlib.h>
 
-Window* window_create() {
+EventList empty_event_list() {
+  return (EventList){.first=NULL,.last=NULL};
+}
+
+EventList empty_event(EventNode* first) {
+  return (EventList){.first=first,.last=NULL};
+}
+
+EventNode event_node(Event event) {
+  return (EventNode){.event=event,.next=NULL};
+}
+
+ShapeList empty_shape_list() {
+  return (ShapeList){.first=NULL,.last=NULL};
+}
+
+ShapeList shape_list(ShapeNode* first) {
+  return (ShapeList){.first=first,.last=NULL};
+}
+
+ShapeNode shape_node(Shape shape) {
+  return (ShapeNode){.shape=shape,.next=NULL};
+}
+
+Window* window_create(unsigned int width, unsigned int height) {
   Window* w = malloc(sizeof(Window));
-  EventNode* event = malloc(sizeof(EventNode));
-  *event = (EventNode){.event=EventEmpty,.next=NULL};
   *w = (Window){
     .is_open=0,
     .mouse_pos={0,0},
-    .events={.first=event,.last=event},
-    .shapes={.first=NULL,.last=NULL}
+    .events=empty_event_list(),
+    .drawn_shapes=empty_shape_list()
     };
 }
 
 void window_draw(Window* window, Shape shape) {
   ShapeNode* sn = malloc(sizeof(ShapeNode));
-  *sn = (ShapeNode){.shape=shape,.next=NULL};
-  window->shapes.last->next = sn;
-  window->shapes.last = sn;
+  *sn = shape_node(shape);
+  window->drawn_shapes.last->next = sn;
+  window->drawn_shapes.last = sn;
 }
 
 int window_is_open(Window* window) {
@@ -63,11 +85,13 @@ void destroy_shapes(ShapeList shapes_list) {
 }
 
 void window_clear(Window* window) {
-  destroy_shapes(window->shapes);
-  window->shapes = (ShapeList){.first=NULL,.last=NULL};
+  destroy_shapes(window->drawn_shapes);
+  window->drawn_shapes = empty_shape_list();
 }
 
 void window_display(Window* window) {
+  window->displayed_shapes = window->drawn_shapes;
+  window->drawn_shapes = empty_shape_list();
   if (!window->events.first) {
     window_close(window);
   }
@@ -75,15 +99,20 @@ void window_display(Window* window) {
 
 void window_destroy(Window* window) {
   destroy_events(window->events);
-  destroy_shapes(window->shapes);
+  destroy_shapes(window->drawn_shapes);
   free(window);
 }
 
 void add_event(Window* window, Event event) {
   EventNode* en = malloc(sizeof(EventNode));
-  *en = (EventNode){.event=event,.next=NULL};
-  window->events.last->next = en;
-  window->events.last = en;
+  *en = event_node(event);
+  if (!window->events.first) {
+    window->events.first = en;
+    window->events.last = en;
+  } else {
+    window->events.last->next = en;
+    window->events.last = en;
+  }
 }
 
 #endif
